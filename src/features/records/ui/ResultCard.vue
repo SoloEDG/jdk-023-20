@@ -10,5 +10,6 @@ defineProps<{ doc: PinballDocument }>()
     <p class="eyebrow">本局结束</p>
     <h2>{{ doc.score }}</h2>
     <p>用时 {{ formatPlay(doc.run.playMs) }}。{{ doc.live.tilted ? '这局倾斜过，不算无倾斜收台。' : '这局没有倾斜。' }}</p>
+    <p v-if="doc.extraBallsEarned > 0">本局拿到过 {{ doc.extraBallsEarned }} 颗额外球。</p>
   </section>
 </template>

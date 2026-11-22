@@ -18,6 +18,7 @@ defineProps<{ doc: PinballDocument }>()
         <span>{{ formatPlay(entry.playMs) }}</span>
         <span>{{ entry.abandoned ? '中途重开' : '打完' }}</span>
         <span>{{ entry.tilted ? '倾斜过' : '未倾斜' }}</span>
+        <span v-if="entry.extraBalls > 0">额外球 ×{{ entry.extraBalls }}</span>
       </li>
     </ol>
   </section>

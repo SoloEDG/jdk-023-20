@@ -54,6 +54,7 @@ function parseEntry(value: unknown): HistoryEntry | null {
     bonusEntries: typeof raw.bonusEntries === 'number' ? raw.bonusEntries : 0,
     bankClears: typeof raw.bankClears === 'number' ? raw.bankClears : 0,
     cleanFinish: raw.cleanFinish === true,
+    extraBalls: typeof raw.extraBalls === 'number' ? raw.extraBalls : 0,
   }
 }
 
@@ -114,6 +115,7 @@ export function commitSession(doc: PinballDocument, abandoned: boolean): void {
     bonusEntries: doc.live.bonusEntries,
     bankClears: doc.live.bankClears,
     cleanFinish: clean,
+    extraBalls: doc.extraBallsEarned,
   })
   if (doc.history.length > 20) doc.history.length = 20
   doc.run.committed = true

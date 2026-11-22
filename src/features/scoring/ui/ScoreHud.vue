@@ -2,12 +2,21 @@
 import { computed } from 'vue'
 import type { PinballDocument } from '@/shared/document'
 import { speedOf } from '@/shared/geometry'
+import { BASE_BALL_COUNT, MAX_EXTRA_BALLS } from '@/features/extra-ball'
 
 const props = defineProps<{ doc: PinballDocument }>()
 
+const regularPips = computed(() => Array.from({ length: BASE_BALL_COUNT }, (_, index) => index < props.doc.ballsLeft))
+const extraPips = computed(() => Array.from({ length: MAX_EXTRA_BALLS }, (_, index) => index < props.doc.extraBalls))
+
 const ballLabel = computed(() => {
-  const index = props.doc.ballsLeft > 0 ? 4 - props.doc.ballsLeft : 3
-  return `第 ${index} 颗 / 共 3 颗`
+  if (props.doc.phase === 'gameover') return '球已用尽'
+  if (props.doc.ballsLeft > 0) {
+    const index = BASE_BALL_COUNT + 1 - props.doc.ballsLeft
+    return `常规球 第 ${index} / ${BASE_BALL_COUNT} 颗`
+  }
+  const extraIndex = props.doc.extraBallsEarned - props.doc.extraBalls + 1
+  return `额外球 第 ${Math.max(1, extraIndex)} / ${props.doc.extraBallsEarned} 颗`
 })
 
 const clock = computed(() => {
@@ -47,6 +56,20 @@ const phaseLabel = computed(() => {
         <dd>{{ phaseLabel }}</dd>
       </div>
     </dl>
+    <div class="ball-rack" role="status" aria-label="剩余球数">
+      <div class="ball-group">
+        <span class="ball-group-label">常规</span>
+        <span class="ball-pips">
+          <i v-for="(lit, index) in regularPips" :key="`regular-${index}`" :class="{ on: lit }"></i>
+        </span>
+      </div>
+      <div class="ball-group">
+        <span class="ball-group-label">额外</span>
+        <span class="ball-pips">
+          <i v-for="(lit, index) in extraPips" :key="`extra-${index}`" :class="['extra', { on: lit }]"></i>
+        </span>
+      </div>
+    </div>
     <p class="ball-label">{{ ballLabel }}</p>
     <p v-if="doc.note.ms > 0" class="note-line">{{ doc.note.text }}</p>
   </div>

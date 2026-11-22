@@ -1,6 +1,7 @@
 import { commandFromInput, type FrameInput } from '@/shared/commands'
 import type { PinballDocument } from '@/shared/document'
 import { absorbZones, tickBonus } from '@/features/bonus'
+import { checkFrameRewards } from '@/features/extra-ball'
 import { advanceControls } from '@/features/flippers'
 import { persist, syncRecords } from '@/features/records'
 import { simulateBall } from '@/features/scoring'
@@ -35,6 +36,7 @@ export function runFrame(doc: PinballDocument, input: FrameInput, dtMs: number):
     if (doc.signals.drain) applyDrain(doc)
   }
   syncRecords(doc)
+  checkFrameRewards(doc)
 }
 
 export function startLoop(doc: PinballDocument, pull: () => FrameInput): () => void {

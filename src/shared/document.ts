@@ -92,6 +92,7 @@ export interface HistoryEntry {
   bonusEntries: number
   bankClears: number
   cleanFinish: boolean
+  extraBalls: number
 }
 
 export interface FeedItem {
@@ -118,6 +119,11 @@ export interface PinballDocument {
   phaseBeforePause: Phase | null
   score: number
   ballsLeft: number
+  extraBalls: number
+  extraBallsEarned: number
+  scoreRewardGiven: boolean
+  careerRewardGiven: boolean
+  careerAllOpenAtStart: boolean
   bestScore: number
   ball: BallState
   flippers: { left: FlipperState; right: FlipperState }
@@ -140,12 +146,21 @@ export function defaultCareer(): CareerState {
   return { score10k: false, bonusOnce: false, bankTwice: false, cleanFinish: false }
 }
 
+export function careerAllOpen(career: CareerState): boolean {
+  return !career.score10k && !career.bonusOnce && !career.bankTwice && !career.cleanFinish
+}
+
 export function createDocument(): PinballDocument {
   return {
     phase: 'ready',
     phaseBeforePause: null,
     score: 0,
     ballsLeft: 3,
+    extraBalls: 0,
+    extraBallsEarned: 0,
+    scoreRewardGiven: false,
+    careerRewardGiven: false,
+    careerAllOpenAtStart: true,
     bestScore: 0,
     ball: {
       x: 372,

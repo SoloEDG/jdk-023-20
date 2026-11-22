@@ -131,6 +131,43 @@ button:focus-visible, canvas:focus-visible {
 
 .note-line { color: #ffd56a; }
 
+.ball-rack {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(243, 226, 196, 0.25);
+}
+
+.ball-group { display: flex; align-items: center; gap: 6px; }
+
+.ball-group-label {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #f3e2c4;
+}
+
+.ball-pips { display: flex; gap: 5px; }
+
+.ball-pips i {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(243, 226, 196, 0.18);
+  box-shadow: inset 0 0 0 2px rgba(243, 226, 196, 0.45);
+}
+
+.ball-pips i.on {
+  background: #f3e2c4;
+  box-shadow: inset 0 0 0 2px #d7a441, 0 0 8px rgba(243, 226, 196, 0.7);
+}
+
+.ball-pips i.extra.on {
+  background: #ffd56a;
+  box-shadow: inset 0 0 0 2px #c81d3a, 0 0 8px rgba(255, 213, 106, 0.8);
+}
+
 .play-row {
   display: grid;
   grid-template-columns: minmax(280px, 460px) 1fr;

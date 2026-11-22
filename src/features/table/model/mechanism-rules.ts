@@ -1,5 +1,6 @@
 import type { ContactEvent } from '@/shared/contacts'
 import {
+  careerAllOpen,
   createDocument,
   findMechanism,
   flashNote,
@@ -74,6 +75,7 @@ export function mountFresh(doc: PinballDocument, kept: KeptRecords): void {
   next.career = kept.career
   next.history = kept.history
   next.bestScore = kept.bestScore
+  next.careerAllOpenAtStart = careerAllOpen(kept.career)
   next.mechanisms = createMechanisms()
   const pose = anchors()
   next.flippers.left.angle = pose.leftRest
